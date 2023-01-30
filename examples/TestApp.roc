@@ -5,20 +5,17 @@ app "TestApp"
     }
     imports [
         pf.Stdout, pf.Task.{ Task },
-        tpf.TestPlatform.{doStuff, doMoreStuff, doEvenMoreStuff}
+        tpf.TestPlatform.{ checkNum }
     ]
     provides [main] to pf
 
 
 main : Task {} []
 main =
-    a <- doStuff "Text 1" |> Task.await
-    b <- doMoreStuff "Text 2" |> Task.await
-    _ <- Stdout.line (Str.concat a b) |> Task.await
-    _ <- (doEvenMoreStuff 0) |> printResult |> Task.await
-    _ <- (doEvenMoreStuff 5) |> printResult |> Task.await
-    _ <- (doEvenMoreStuff 10) |> printResult |> Task.await
-    (doEvenMoreStuff 20) |> printResult
+    _ <- (checkNum 0) |> printResult |> Task.await
+    _ <- (checkNum 5) |> printResult |> Task.await
+    _ <- (checkNum 10) |> printResult |> Task.await
+    (checkNum 20) |> printResult
 
 
 printResult = \task ->

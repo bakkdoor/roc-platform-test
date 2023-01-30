@@ -1,19 +1,10 @@
 interface TestPlatform
-    exposes [doStuff, doMoreStuff, doEvenMoreStuff]
-    imports [pf.Task.{Task}]
-
-doStuff : Str -> Task Str []
-doStuff = \string ->
-    Task.succeed string
+    exposes [checkNum]
+    imports [pf.Task.{ Task }]
 
 
-doMoreStuff : Str -> Task Str []
-doMoreStuff = \string ->
-    Task.succeed (Str.concat string string)
-
-
-doEvenMoreStuff : Nat -> Task Nat [ToLow Nat, ToHigh Nat]
-doEvenMoreStuff = \num ->
+checkNum : Nat -> Task Nat [ToLow Nat, ToHigh Nat]
+checkNum = \num ->
     when num is
         0 ->
             Task.fail (ToLow num)
