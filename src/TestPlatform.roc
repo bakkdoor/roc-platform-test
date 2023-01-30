@@ -12,7 +12,7 @@ doMoreStuff = \string ->
     Task.succeed (Str.concat string string)
 
 
-# doEvenMoreStuff : (Int Unsigned8) -> Task (Int Unsigned8) [ToLow, ToHigh]
+doEvenMoreStuff : Nat -> Task Nat [ToLow Nat, ToHigh Nat]
 doEvenMoreStuff = \num ->
     when num is
         0 ->
