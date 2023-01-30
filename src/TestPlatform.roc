@@ -1,5 +1,5 @@
 interface TestPlatform
-    exposes [checkNum]
+    exposes [checkNum, HttpStatus, HttpResponse, HttpSuccess, HttpError, HttpTask, httpNotify]
     imports [pf.Task.{ Task }]
 
 
