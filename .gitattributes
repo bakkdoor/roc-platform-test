@@ -1,0 +1,2 @@
+*.roc  text eol=lf
+*.roc linguist-language=Elm
