@@ -5,12 +5,28 @@ app "TestApp"
     }
     imports [
         pf.Stdout, pf.Task.{ Task },
-        tpf.TestPlatform.{doStuff, doMoreStuff}
+        tpf.TestPlatform.{doStuff, doMoreStuff, doEvenMoreStuff}
     ]
     provides [main] to pf
 
+
 main : Task {} []
 main =
-    a <- Task.await (doStuff "Text 1")
-    b <- Task.await (doMoreStuff "Text 2")
-    Stdout.line (Str.concat a b)
+    a <- doStuff "Text 1" |> Task.await
+    b <- doMoreStuff "Text 2" |> Task.await
+    _ <- Stdout.line (Str.concat a b) |> Task.await
+    _ <- (doEvenMoreStuff 0) |> printResult |> Task.await
+    _ <- (doEvenMoreStuff 5) |> printResult |> Task.await
+    _ <- (doEvenMoreStuff 10) |> printResult |> Task.await
+    (doEvenMoreStuff 20) |> printResult
+
+
+printResult = \task ->
+    result <- Task.attempt task
+    when result is
+        Ok val ->
+            Stdout.line (Str.concat "Valid value given: " (Num.toStr val))
+        Err (ToLow val) ->
+            Stdout.line (Str.concat "Too low value given: " (Num.toStr val))
+        Err (ToHigh val) ->
+            Stdout.line (Str.concat "Too high value given: " (Num.toStr val))
