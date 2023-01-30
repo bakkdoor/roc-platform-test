@@ -17,10 +17,9 @@ doEvenMoreStuff = \num ->
     when num is
         0 ->
             Task.fail (ToLow num)
-        10 ->
-            Task.fail (ToHigh num)
+
+        x if x < 10 ->
+            Task.succeed num
+
         _ ->
-            if num < 10 then
-                Task.succeed num
-            else
-                Task.fail (ToHigh num)
+            Task.fail (ToHigh num)
