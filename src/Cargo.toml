@@ -1,0 +1,22 @@
+[package]
+name = "roc-platform-test"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+links = "app"
+
+[lib]
+name = "host"
+path = "src/lib.rs"
+crate-type = ["staticlib", "rlib"]
+
+[[bin]]
+name = "host"
+path = "src/main.rs"
+
+[dependencies]
+backtrace = "0.3"
+libc = "0.2"
+roc_std = { git = "https://github.com/roc-lang/roc", rev = "8afdc820" }
