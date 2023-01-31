@@ -33,11 +33,52 @@ quickSort = \list ->
             |> List.append pivot
             |> List.concat(right |> quickSort)
 
-doSort : Nat -> List (List Nat)
-doSort = \max ->
-    range 1 max
-    |> List.reverse
-    |> List.map \n ->
-        range 1 n
-        |> List.reverse
-        |> quickSort
+
+splitIntoChunks : List a, Nat -> List (List a)
+splitIntoChunks = \list, chunkSize ->
+    count = List.len list
+
+    when chunkSize is
+        0 -> []
+        cs if count < cs ->
+            when list is
+                [] -> []
+                _ -> [list]
+        _ ->
+            List.withCapacity (
+                count
+                |> Num.toFrac
+                |> Num.div (chunkSize |> Num.toFrac)
+                |> Num.ceiling
+            )
+            |> List.append (
+                list
+                |> List.takeFirst chunkSize
+            )
+            |> List.concat (
+                list
+                |> List.drop chunkSize
+                |> splitIntoChunks chunkSize
+            )
+
+
+flatten : List (List a) -> List a
+flatten = \list ->
+    flattenAcc list []
+
+flattenAcc : List (List a), List a -> List a
+flattenAcc = \list, acc ->
+    when list is
+        [] ->
+            acc
+        [head, ..] ->
+            tail =
+                List.drop list 1
+            newAcc =
+                ((List.len acc) + (List.len head))
+                |> List.withCapacity
+                |> List.concat acc
+                |> List.concat head
+
+            flattenAcc tail newAcc
+
