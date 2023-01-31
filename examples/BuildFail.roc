@@ -32,12 +32,11 @@ multiTaskList = \tasks ->
         [firstTask, ..] ->
             remainingTasks = List.drop tasks 1
 
-            firstTask
-            |> Task.await (\value ->
-                remainingTasks
-                |> multiTaskList
-                |> Task.map (\values ->
-                    values
-                    |> List.prepend value
-                )
+            value <- Task.await firstTask
+
+            remainingTasks
+            |> multiTaskList
+            |> Task.map (\values ->
+                values
+                |> List.prepend value
             )
