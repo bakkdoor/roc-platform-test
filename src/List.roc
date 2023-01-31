@@ -1,6 +1,6 @@
-interface TestPlatform
-    exposes [range, rangeAcc, quickSort, doSort]
-    imports [pf.Task.{ Task }]
+interface List
+    exposes [range, rangeAcc, quickSort, doSort, splitIntoChunks, flatten]
+    imports []
 
 range : Nat, Nat -> List Nat
 range = \min, max ->
@@ -81,4 +81,3 @@ flattenAcc = \list, acc ->
                 |> List.concat head
 
             flattenAcc tail newAcc
-
