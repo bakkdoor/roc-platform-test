@@ -2,4 +2,5 @@
 src/target
 examples/TestApp
 examples/BuildFail
+examples/BuildFail2
 examples/BuildInfiniteLoop

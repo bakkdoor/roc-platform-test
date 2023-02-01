@@ -1,5 +1,5 @@
-interface List
-    exposes [range, rangeAcc, quickSort, doSort, splitIntoChunks, flatten]
+interface ListUtil
+    exposes [range, quickSort, splitIntoChunks, flatten]
     imports []
 
 range : Nat, Nat -> List Nat
