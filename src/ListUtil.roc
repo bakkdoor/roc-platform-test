@@ -1,5 +1,5 @@
 interface ListUtil
-    exposes [range, quickSort, splitIntoChunks, flatten]
+    exposes [range, quickSort, splitIntoChunks, flatten, flatLen]
     imports []
 
 range : Nat, Nat -> List Nat
@@ -84,9 +84,8 @@ flattenAcc = \list, acc ->
             flattenAcc tail newAcc
 
 
-flatCount : List (List a) -> Nat
-flatCount = \list ->
-    when list is
-        [] -> 0
-        [head, ..] ->
-            (List.len head) + (flatCount (List.drop list 1))
+flatLen : List (List a) -> Nat
+flatLen = \list ->
+    list
+    |> List.map List.len
+    |> List.sum
