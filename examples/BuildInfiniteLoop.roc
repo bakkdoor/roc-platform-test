@@ -1,9 +1,11 @@
 app "BuildInfiniteLoop"
     packages {
-        pf: "https://github.com/roc-lang/basic-cli/releases/download/0.2.0/8tCohJeXMBUnjo_zdMq0jSaqdYoCWJkWazBd4wa8cQU.tar.br"
+        pf: "https://github.com/roc-lang/basic-cli/releases/download/0.2.0/8tCohJeXMBUnjo_zdMq0jSaqdYoCWJkWazBd4wa8cQU.tar.br",
+        tpf: "../src/main.roc"
     }
     imports [
-        pf.Stdout, pf.Task.{ Task }
+        pf.Stdout, pf.Task.{ Task },
+        tpf.ListUtil.{ flatten }
     ]
     provides [main] to pf
 
@@ -40,9 +42,3 @@ multiTaskList = \tasks ->
                 Task.succeed [v1, v2]
             )
             |> Task.map flatten
-
-
-flatten : List (List a) -> List a
-flatten = \lists ->
-    lists
-    |> List.walk [] List.concat

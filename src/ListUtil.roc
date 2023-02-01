@@ -75,9 +75,18 @@ flattenAcc = \list, acc ->
             tail =
                 List.drop list 1
             newAcc =
-                ((List.len acc) + (List.len head))
+                list
+                |> flatCount
                 |> List.withCapacity
                 |> List.concat acc
                 |> List.concat head
 
             flattenAcc tail newAcc
+
+
+flatCount : List (List a) -> Nat
+flatCount = \list ->
+    when list is
+        [] -> 0
+        [head, ..] ->
+            (List.len head) + (flatCount (List.drop list 1))
